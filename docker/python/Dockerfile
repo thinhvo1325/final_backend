@@ -19,10 +19,10 @@ RUN pip install --upgrade pip
 RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
+COPY ./api/app /api/app
 
-RUN pip install -r /api/requirements.txt
+RUN pip install -r /api/app/requirements.txt
 
 # copy project
-COPY ./api/app /api/app
 
 EXPOSE 8000
