@@ -8,7 +8,7 @@ services:
   python:
     image: final_project/python
     build:
-      context: ./
+      context: 
       dockerfile: docker/python/dockerfile
 
     container_name: photo_app_py
@@ -31,7 +31,7 @@ services:
   rabbitmq:
     image: final_project/rabbitmq
     build:
-      context: ./
+      context: 
       dockerfile: docker/rabbitmq/dockerfile
     ports:
       - 5672:5672
@@ -46,7 +46,7 @@ services:
   redis:
     image: final_project/redis
     build: 
-        context: ./
+        context: 
         dockerfile: docker/redis/dockerfile
     container_name: photo_app_rd
     ports:
@@ -60,7 +60,7 @@ services:
   elasticsearch:
     image: final_project/elasticsearch
     build:
-      context: ./
+      context: 
       dockerfile: docker/elasticsearch/dockerfile
     container_name: photo_app_es
     environment:
