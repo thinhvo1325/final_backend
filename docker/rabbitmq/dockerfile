@@ -1,0 +1,9 @@
+FROM rabbitmq:3.9-management
+
+RUN rabbitmq-plugins enable --offline rabbitmq_management
+
+ENV RMQ_PORT 5672
+
+ENV RABBITMQ_HTTP_PORT 15672
+
+EXPOSE 5672 15672

@@ -1,0 +1,7 @@
+FROM elasticsearch:7.17.9
+
+EXPOSE 9200 9300 
+
+RUN apt-get update
+RUN apt-get install -y vim
+RUN ["bin/elasticsearch-plugin", "install", "analysis-icu"]
