@@ -7,12 +7,12 @@ from dateutil.relativedelta import relativedelta
 from elasticsearch import Elasticsearch as ES
 from elasticsearch import helpers
 from cores.common import DATE_FORMAT, DATETIME_FORMAT, SPLID_DATE_CHAR, FIELD_NOT_STR_FORMAT, viettnamese_regex_pattent
-
+from decouple import config
 
 class Elasticsearch:
     def __init__(self, index: str, init_config: dict = {}):
         self.index = index
-        self.es = ES("http://localhost:9200")
+        self.es = ES(f"http://{config('ES_HOST')}:{config('ES_PORT')}")
         self.config_es(init_config)
 
     def close_es(self):
@@ -20,7 +20,7 @@ class Elasticsearch:
 
     @classmethod
     def get_all_indices(cls, start_with: str = '', contain: str = '', end_with: str = ''):
-        es = ES("http://localhost:9200")
+        self.es = ES(f"http://{config('ES_HOST')}:{config('ES_PORT')}")
         data = es.indices.get_alias(index=f'{start_with}*{contain}*{end_with}').keys()
         es.close()
         return data
