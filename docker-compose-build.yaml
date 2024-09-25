@@ -9,29 +9,29 @@ services:
   python:
     image: final_project/python
     build:
-      context: 
+      context: ./
       dockerfile: docker/python/dockerfile
   #-----------------mysql----------------#
   mysql:
     image: final_project/mysql
     build:
-      context: .
+      context: ./
       dockerfile: docker/mysql/dockerfile
   #------------rabbitmq---------------------#
   rabbitmq:
     image: final_project/rabbitmq
     build:
-      context: 
+      context: ./
       dockerfile: docker/rabbitmq/dockerfile
   #--------------redis-------------------#
   redis:
     image: final_project/redis
     build: 
-        context: 
+        context: ./
         dockerfile: docker/redis/dockerfile
   #--------------Elasticsearch-------------------#
   elasticsearch:
     image: final_project/elasticsearch
     build:
-      context: 
+      context: ./
       dockerfile: docker/elasticsearch/dockerfile
