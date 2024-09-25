@@ -19,8 +19,8 @@ services:
     
 
   mysql:
-    container_name: final_project/mysql
-    image: photo_app_mysql
+    container_name: photo_app_mysql
+    image: final_project/mysql
     environment:
       - MYSQL_DATABASE=photo_app
       - MYSQL_ROOT_USERNAME=root
