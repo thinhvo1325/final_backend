@@ -30,7 +30,7 @@ services:
     networks:
       - backend
     volumes:
-      - ./docker/mysql:/var/lib/mysql
+      - ./docker/mysql/mysql:/var/lib/mysql
       - ./docker/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     dns:
       - 8.8.8.8
