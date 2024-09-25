@@ -5,80 +5,33 @@ networks:
     driver: bridge
 
 services:
+  #---------------python------------------#
   python:
     image: final_project/python
     build:
       context: 
       dockerfile: docker/python/dockerfile
-
-    container_name: photo_app_py
-    ports:
-      - 8000:8000
-    working_dir: /var/www/final_project/api
-    volumes:
-      - ./storage:/storage/
-    networks:
-      - backend
-    dns:
-      - 8.8.8.8
-    restart: on-failure:10
-    depends_on:
-      - rabbitmq
-      - redis
-      - elasticsearch
-    
-
+  #-----------------mysql----------------#
+  mysql:
+    image: final_project/mysql
+    build:
+      context: .
+      dockerfile: docker/mysql/dockerfile
+  #------------rabbitmq---------------------#
   rabbitmq:
     image: final_project/rabbitmq
     build:
       context: 
       dockerfile: docker/rabbitmq/dockerfile
-    ports:
-      - 5672:5672
-      - 15672:15672
-    container_name: photo_app_rabbitmq
-    networks:
-      - backend
-    dns:
-      - 8.8.8.8
-    restart: on-failure:10
-  
+  #--------------redis-------------------#
   redis:
     image: final_project/redis
     build: 
         context: 
         dockerfile: docker/redis/dockerfile
-    container_name: photo_app_rd
-    ports:
-      - 6379:6379
-    networks:
-      - backend
-    dns:
-      - 8.8.8.8
-    restart: on-failure:10
-
+  #--------------Elasticsearch-------------------#
   elasticsearch:
     image: final_project/elasticsearch
     build:
       context: 
       dockerfile: docker/elasticsearch/dockerfile
-    container_name: photo_app_es
-    environment:
-      - xpack.security.enabled=false
-      - discovery.type=single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    ports:
-      - 9200:9200
-    volumes:
-      - ./docker/elasticsearch/data:/usr/share/elasticsearch/data
-    networks:
-      - backend
-    dns:
-      - 8.8.8.8
-    restart: on-failure:10

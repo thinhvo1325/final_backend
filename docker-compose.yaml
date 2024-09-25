@@ -4,59 +4,99 @@ services:
 
   # Redis
   redis:
-    image: redis
-    container_name: redis
+    image: final_project/redis
+    container_name: photo_app_rd
     restart: unless-stopped
     command: redis-server --requirepass password
     volumes:
-      - redis-data:/data
+      - ./docker/redis/data:/data
     ports:
      - 6379:6379
     networks:
-     - mlnet
+     - backend
+    dns:
+      - 8.8.8.8
+    
 
-  # Rabbitmq   
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: 'rabbitmq'
-    ports:
-        - 5672:5672
-        - 15672:15672
+  mysql:
+    container_name: final_project/mysql
+    image: photo_app_mysql
     environment:
-      - RABBITMQ_DEFAULT_USER=guest 
-      - RABBITMQ_DEFAULT_PASS=guest
-    volumes:
-      - rabbitmq-data:/var/lib/rabbitmq/
-      - rabbitmq-logs:/var/log/rabbitmq
-    networks:
-      - mlnet
-
-  # API    
-  ml-api:
-    image: duynguyenngoc/mmip-api:latest
-    container_name: ml-api
-    restart: unless-stopped
-    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 8081 --reload"
-    volumes:
-      - ./ml-storages:/storages/
-      - api-logs:/logs/
+      - MYSQL_DATABASE=photo_app
+      - MYSQL_ROOT_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=root
     ports:
-     - 8081:8081
+      - ${MYSQL_HTTP_PORT}:3306
     networks:
-     - mlnet
-
-  # Celery object detection
-  ml-celery:
-    image: duynguyenngoc/mmip-celery:latest
-    container_name: ml-celery
-    restart: unless-stopped
-    command: sh -c "celery -A tasks worker --loglevel=info --concurrency=1 -E --logfile=/logs/celery.log"
+      - backend
     volumes:
-      - ./ml-storages:/storages/
-      - celery-logs:/logs/
-    networks:
-      - mlnet
+      - ./docker/mysql:/var/lib/mysql
+      - ./docker/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    dns:
+      - 8.8.8.8
+    restart: always
 
+
+  rabbitmq:
+    image: final_project/rabbitmq
+    container_name: photo_app_rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - backend
+    # network_mode: host
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    dns:
+      - 8.8.8.8
+    restart: on-failure:10
+
+  elasticsearch:
+    image: final_project/elasticsearch
+    container_name: photo_app_es
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - TZ=Asia/Ho_Chi_Minh
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - 9200:9200
+    volumes:
+#      - .${ES_DOCKER_PATH}/data:/usr/share/elasticsearch/data
+      - ./docker/elasticsearch/data:/usr/share/elasticsearch/data
+    networks:
+      - backend
+    dns:
+      - 8.8.8.8
+    restart: on-failure:10
+
+  web:
+    image: final_project/python
+    container_name: photo_app_py
+    volumes:
+      - ./api/app:/var/www/final_project/api/app
+      - ./storage:/var/www/final_project/storage
+    ports:
+      - 8000:8000
+    working_dir: /var/www/final_project/api/app
+    networks:
+      - backend
+    dns:
+      - 8.8.8.8
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    restart: on-failure:10
+    depends_on:
+      - elasticsearch 
+      - rabbitmq
+    command: bash -c "python main.py"
 
 networks:
   mlnet:

@@ -3,7 +3,7 @@
 #===============================================
 
 # pull official base image
-FROM python:12
+FROM python:3.12.6-bullseye
 
 # set work directory
 WORKDIR /app
@@ -20,10 +20,9 @@ RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
 
-COPY ./requirements.txt /app/requirements.txt 
-RUN pip install -r requirements.txt
+RUN pip install -r /api/requirements.txt
 
 # copy project
-COPY ./app/ /app/
+COPY ./api/app /api/app
 
 EXPOSE 8000
