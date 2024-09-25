@@ -45,7 +45,6 @@ services:
       - 15672:15672
     networks:
       - backend
-    # network_mode: host
     environment:
       - TZ=Asia/Ho_Chi_Minh
     dns:
@@ -97,9 +96,10 @@ services:
       - elasticsearch 
       - rabbitmq
     command: bash -c "python main.py"
-
+  
+  
 networks:
-  mlnet:
+  backend:
 
 volumes:
   redis-data:
