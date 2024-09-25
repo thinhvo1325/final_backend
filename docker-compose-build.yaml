@@ -10,7 +10,7 @@ services:
     image: final_project/python
     build:
       context: ./
-      dockerfile: ./docker/python/dockerfile
+      dockerfile: ./docker/python/Dockerfile
   #-----------------mysql----------------#
   mysql:
     image: final_project/mysql
