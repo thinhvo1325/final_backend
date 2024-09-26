@@ -13,6 +13,7 @@ class ObjectDetection():
         image_np = self.load_image_into_numpy_array(file_path)
         output_dict = self.run_inference_for_single_image(image_np)
         return output_dict
+    
     def run_inference_for_single_image(self, image):
   
         image = np.asarray(image)
@@ -27,15 +28,6 @@ class ObjectDetection():
                     for key,value in output_dict.items()}
         output_dict['num_detections'] = num_detections
         output_dict['detection_classes'] = output_dict['detection_classes'].astype(np.int64)
-
-        # if 'detection_masks' in output_dict:
-        #     detection_masks_reframed = utils_ops.reframe_box_masks_to_image_masks(
-        #             output_dict['detection_masks'], output_dict['detection_boxes'],
-        #             image.shape[0], image.shape[1])      
-        #     detection_masks_reframed = tf.cast(detection_masks_reframed > 0.5,
-        #                                     tf.uint8)
-        #     output_dict['detection_masks_reframed'] = detection_masks_reframed.numpy()
-        
         return output_dict
 
     def load_image_into_numpy_array(self, path):
