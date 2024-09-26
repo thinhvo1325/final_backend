@@ -82,6 +82,8 @@ services:
     volumes:
       - ./api/app:/var/www/final_backend/api/app
       - ./storage:/var/www/final_backend/storage
+      - ./docker/python/supervisord.d:/etc/supervisord.d
+      - ./docker/python/supervisord.conf:/etc/supervisord.conf
     ports:
       - 8000:8000
     working_dir: /var/www/final_backend/api/app
@@ -95,8 +97,7 @@ services:
     depends_on:
       - elasticsearch 
       - rabbitmq
-    command: bash -c "python main.py"
-  
+    command: bash -c "/usr/bin/supervisord -n -c /etc/supervisord.conf && python main.py"
   
 networks:
   backend:
