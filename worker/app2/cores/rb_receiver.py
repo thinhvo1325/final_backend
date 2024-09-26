@@ -39,7 +39,7 @@ class RabbitMQReceiver(object):
         if self.queue_name == 'object_detection':
             # service = ImportDownloadInfo()
             # service.import_download_info(body.decode('UTF-8'))
-            self.model.predict(body['task_id'], json.loads(body['data'])['upload_result']['path'])
+            self.model.predict(body['task_id'],config('FOLDER_UPLOAD') +  json.loads(body['data'])['upload_result']['path'])
             ch.basic_ack(delivery_tag=method.delivery_tag)
         
 

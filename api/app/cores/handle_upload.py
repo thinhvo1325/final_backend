@@ -25,7 +25,7 @@ async def process_image_upload(file_bytes, task_id: str, time: datetime, data: D
         data.status['detection_status'] = "DETECTING"
 
         #update upload result
-        data.upload_result = {"path": file_path} 
+        data.upload_result = {"path": file_path.replace(config('FOLDER_UPLOAD'), '')} 
         data_dump = json.dumps(data.__dict__)
         redis_connecter.set(task_id, data_dump)
         
