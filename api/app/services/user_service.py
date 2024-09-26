@@ -14,8 +14,6 @@ class UserService(SqlAchemyAbstract):
 
     async def find_user(self, username, password):
         try:
-            print(username)
-            print(password)
             checker = await self.search(fields={'username': username, "password": password}, is_absolute=True)
             if checker is None:
                 return handler_response(403, None, "Sai tài khoản hoặc mật khẩu")

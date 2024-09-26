@@ -19,13 +19,16 @@ class PredictTask(object):
         return model
     
     def predict(self, task_id, file_path):
-        data = self.model.predict(file_path)
-        text_detection_result = [d['facial_area'] for d in data]
-        
-        status = json.loads(redis_connecter.get(task_id))
-        status.update({'face_detection': text_detection_result})
-        redis_connecter.set(task_id, json.dumps(status))
-        self.sender.publish({'task_id': task_id, 
-                             'type': 'face_detection',
-                             'data': data})
+        try:
+            data = self.model.predict(file_path)
+            text_detection_result = [d['facial_area'] for d in data]
+            
+            status = json.loads(redis_connecter.get(task_id))
+            status.update({'face_detection': text_detection_result})
+            redis_connecter.set(task_id, json.dumps(status))
+            self.sender.publish({'task_id': task_id, 
+                                'type': 'face_detection',
+                                'data': data})
+        except Exception as e:
+            return
        

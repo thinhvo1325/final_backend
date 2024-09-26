@@ -24,7 +24,6 @@ async def upload(
     background_tasks: BackgroundTasks,
     image_service: ImageService = Depends()
 ):
-    print(file)
     time = time_helper.now_utc()
     task_id = str(uuid.uuid4())
     time_handle = MlTimeHandle(start_upload=str(time.timestamp())).__dict__

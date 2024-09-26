@@ -610,7 +610,6 @@ def must_and_must_not_query(is_search: bool = False, parents: list = [], params:
                     elif key in ['text_list']:
                         should_in_must = []
                         value = unidecode(value.strip().lower())
-                        print(value)
                         if len(value.split(' '))==1:
                             if re.search(viettnamese_regex_pattent, value):
                                 should_in_must.append({"wildcard": {f'{parent_prefix}{key}.keyword': f'*{value}*'}})

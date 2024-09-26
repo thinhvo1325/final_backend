@@ -19,16 +19,19 @@ class PredictTask(object):
         return model
     
     def predict(self, task_id, file_path):
-        data = self.model.predict(file_path)
-        object_detection_result = []
-        for box, classes, score in zip(data['detection_boxes'], data['detection_classes'], data['detection_scores']):
-            if score > 0.7:
-                object_detection_result.append({'box': str(list(box)), 'class': int(classes), 'score': str(round(score,3)*100)})
-        status = json.loads(redis_connecter.get(task_id))
-        status.update({'object_detection': object_detection_result})
-        redis_connecter.set(task_id, json.dumps(status))
-        self.sender.publish({'task_id': task_id, 
-                             'type': 'object_detection',
-                             'data': object_detection_result})
+        try:
+            data = self.model.predict(file_path)
+            object_detection_result = []
+            for box, classes, score in zip(data['detection_boxes'], data['detection_classes'], data['detection_scores']):
+                if score > 0.7:
+                    object_detection_result.append({'box': str(list(box)), 'class': int(classes), 'score': str(round(score,3)*100)})
+            status = json.loads(redis_connecter.get(task_id))
+            status.update({'object_detection': object_detection_result})
+            redis_connecter.set(task_id, json.dumps(status))
+            self.sender.publish({'task_id': task_id, 
+                                'type': 'object_detection',
+                                'data': object_detection_result})
+        except Exception as e:
+            return
        
         

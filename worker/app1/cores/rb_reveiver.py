@@ -35,7 +35,6 @@ class RabbitMQReceiver(object):
 
     def callback(self, ch, method, properties, body):
         body = json.loads(body)
-        print(body)
         if self.queue_name == 'text_detection':
             # service = ImportDownloadInfo()
             # service.import_download_info(body.decode('UTF-8'))
