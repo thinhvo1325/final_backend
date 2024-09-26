@@ -31,7 +31,7 @@ class PredictTask(object):
             x_max_pixel = int(x_max * image_width)
             y_min_pixel = int(y_min * image_height)
             y_max_pixel = int(y_max * image_height)
-            draw.rectangle([x_min_pixel, y_min_pixel, x_max_pixel, y_max_pixel], outline="red", width=3)
+            draw.rectangle([x_min_pixel, y_min_pixel, x_max_pixel, y_max_pixel], outline="red", width=1)
             label = f"Class {obj['class']}, {float(obj['score']):.2f}%"
             draw.text((x_min_pixel, y_min_pixel - 10), label, fill="red")
         image.save(file_path.replace(config('FOLDER_UPLOAD'),config('FOLDER_OBJECT')))

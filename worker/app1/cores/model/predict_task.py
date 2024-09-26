@@ -1,4 +1,5 @@
-
+from PIL import Image, ImageDraw
+from decouple import config
 from cores.model.model_loader.text_detection_loader import TextDetection
 from cores.service_init import redis_connecter
 from cores.rb_sender import RabbitMQSender
@@ -19,6 +20,16 @@ class PredictTask(object):
         model = TextDetection()
         return model
     
+    def draw_image(self, file_path, list_text):
+        image = Image.open(file_path)
+        draw = ImageDraw.Draw(image)
+        for detection in list_text:
+            text, box = detection
+            draw.polygon(box, outline="red", width=1)
+            draw.text((box[0][0], box[0][1] - 10), text, fill="red")
+        image.save(file_path.replace(config('FOLDER_UPLOAD'),config('FOLDER_TEXT')))
+
+
     def predict(self, task_id, file_path):
         try:
             data = self.model.predict(file_path)
@@ -35,6 +46,7 @@ class PredictTask(object):
             self.sender.publish({'task_id': task_id, 
                                 'type': 'text_detection',
                                 'data': text_detection_result})
+            self.draw_image(file_path, data)
         except Exception as e:
             return 
         
