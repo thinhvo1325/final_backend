@@ -80,11 +80,11 @@ services:
     image: final_project/python
     container_name: photo_app_py
     volumes:
-      - ./api/app:/var/www/final_project/api/app
-      - ./storage:/var/www/final_project/storage
+      - ./api/app:/var/www/final_backend/api/app
+      - ./storage:/var/www/final_backend/storage
     ports:
       - 8000:8000
-    working_dir: /var/www/final_project/api/app
+    working_dir: /var/www/final_backend/api/app
     networks:
       - backend
     dns:
