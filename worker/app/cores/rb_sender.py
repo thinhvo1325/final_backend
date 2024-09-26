@@ -12,7 +12,7 @@ class RabbitMQSender:
         if not self._conn or self._conn.is_closed:
             credentials = pika.PlainCredentials(config('RABBITMQ_USER'), config('RABBITMQ_PASS'))
             parameters = pika.ConnectionParameters(config('RABBITMQ_HOST'),
-                                                    9999,
+                                                    config('RABBITMQ_PORT'),
                                                     '/',
                                                     credentials)
 

@@ -9,24 +9,24 @@ from decouple import config
 # )
 
 redis_connecter = Redis(
-    host='localhost', 
-    port=9678, 
-    password='password', 
+    host=config("REDIS_HOST"), 
+    port=config("REDIS_PORT"), 
+    password=config("REDIS_PASSWORD"), 
     db=config('REDIS_DB')
 )
 
 #----------------------CELERY INFORMATION------------------------------------
 CELERY_BROKEN_URL = "amqp://{user}:{pw}@{hostname}:{port}/{vhost}".format(
-    user='guest', 
-    pw='guest', 
-    hostname='localhost', 
-    port=9999, 
-    vhost=config('RABBITMQ_HOST')
+    user=config('RABBITMQ_USER'), 
+    pw=config('RABBITMQ_PASS'), 
+    hostname=config('RABBITMQ_HOST'), 
+    port=config('RABBITMQ_PORT'), 
+    vhost='/'
 )
 
 CELERY_BACKED_URL = "redis://:password@{hostname}:{port}/{db}".format(
     hostname=config('REDIS_HOST'),
-    port=9678,
+    port=config("REDIS_PORT"),
     db=config('REDIS_DB'),
 )
 
@@ -42,7 +42,6 @@ def is_backend_running() -> bool:
             db=config('REDIS_DB')
         )
         redis_connecter.client_list()  # Must perform an operation to check connection.
-        print(22222222222222222222222222222222222222222222)
     except ConnectionError as e:
         print("Failed to connect to Redis instance at")
         print(repr(e))
@@ -56,7 +55,6 @@ def is_broker_running(retries: int = 3) -> bool:
     try:
         conn = Connection(CELERY_BROKEN_URL)
         conn.ensure_connection(max_retries=retries)
-        print(1111111111111111111111111111111111)
     except OperationalError as e:
         print("Failed to connect to RabbitMQ instance at ")
         print(str(e))
