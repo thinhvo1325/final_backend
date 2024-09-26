@@ -13,6 +13,9 @@ async def process_image_upload(file_bytes, task_id: str, time: datetime, data: D
     file_name = task_id + ".jpg"
     dir_path = config('FOLDER_UPLOAD') +'/'+ time_helper.str_yyyy_mm_dd(time)    
     create_path(dir_path)
+    create_path(dir_path.replace(config('FOLDER_UPLOAD'), config('FOLDER_OBJECT')))
+    create_path(dir_path.replace(config('FOLDER_UPLOAD'), config('FOLDER_FACE')))
+    create_path(dir_path.replace(config('FOLDER_UPLOAD'), config('FOLDER_TEXT')))
     file_path = dir_path + "/" +  file_name
     try:
         upload_file_bytes(file_bytes, file_path)
