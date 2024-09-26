@@ -1,21 +1,19 @@
 """add field detection to image
 
-Revision ID: 9a6a46e96ce2
+Revision ID: 3abad82a2eaa
 Revises: 
-Create Date: 2024-09-23 10:12:39.726050
+Create Date: 2024-09-26 08:50:58.928347
 
 """
-from typing import Sequence, Union
-
 from alembic import op
 import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '9a6a46e96ce2'
-down_revision: Union[str, None] = None
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+revision = '3abad82a2eaa'
+down_revision = None
+branch_labels = None
+depends_on = None
 
 
 def upgrade() -> None:
@@ -39,7 +37,7 @@ def upgrade() -> None:
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('created_date', sa.String(length=255), nullable=True),
     sa.Column('object_list', sa.JSON(), nullable=True),
-    sa.Column('text_list', sa.String(), nullable=True),
+    sa.Column('text_list', sa.String(length=10000), nullable=True),
     sa.Column('face_list', sa.JSON(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
