@@ -82,8 +82,7 @@ services:
     volumes:
       - ./api/app:/var/www/final_backend/api/app
       - ./storage:/var/www/final_backend/storage
-      - ./docker/python/supervisord.d:/etc/supervisord.d
-      - ./docker/python/supervisord.conf:/etc/supervisord.conf
+      - ./docker/python/supervisord.d/:/etc/supervisor/conf.d/
     ports:
       - 8000:8000
     working_dir: /var/www/final_backend/api/app
