@@ -97,7 +97,7 @@ services:
     depends_on:
       - elasticsearch 
       - rabbitmq
-    command: bash -c "/usr/bin/supervisord -n -c /etc/supervisord.conf && python main.py"
+    command: bash -c "python main.py"
   
 networks:
   backend:
