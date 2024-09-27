@@ -103,7 +103,6 @@ class ImageFileSearchSchema(BaseModel):
         data = super(ImageFileSearchSchema, self).model_dump(**kwargs)
         return_data = {}
         for key, value in data.items():
-            print(key)
             if value is not None:
                 if key in change_names.keys():
                     return_data.update({change_names.get(key): value})
@@ -116,7 +115,6 @@ class ImageFileSearchSchema(BaseModel):
                     return_data_new.update({key: object_name_id[value]})
                 else:
                     return_data_new.update({key: value})
-        print(return_data_new)
         return return_data_new
     
 
