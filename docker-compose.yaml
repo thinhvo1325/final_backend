@@ -19,7 +19,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 1
+          cpus: '1'
           memory: 500M
 
   mysql:
@@ -41,7 +41,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 2
+          cpus: '1'
           memory: 1G
     restart: always
 
