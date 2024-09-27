@@ -40,6 +40,9 @@ async def upload(
         "image_id": task_id,
         "created_date": time,
         "is_public": False,
+        "resource_path": None,
+        "text_list": "",
+        "object_list": [],
         "user_id": 1})
     return UploadResponse(status="DETECTING", time=time, status_code=HTTP_200_OK, task_id=task_id)
 
