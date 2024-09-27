@@ -16,7 +16,11 @@ services:
      - backend
     dns:
       - 8.8.8.8
-    
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 500M
 
   mysql:
     container_name: photo_app_mysql
@@ -34,6 +38,11 @@ services:
       - ./docker/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     dns:
       - 8.8.8.8
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 1G
     restart: always
 
 
@@ -49,6 +58,11 @@ services:
       - TZ=Asia/Ho_Chi_Minh
     dns:
       - 8.8.8.8
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 500M
     restart: on-failure:10
 
   elasticsearch:
@@ -74,7 +88,12 @@ services:
       - backend
     dns:
       - 8.8.8.8
-    restart: on-failure:10
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 2G
+    restart: always
 
   web:
     image: final_project/python
