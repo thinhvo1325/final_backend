@@ -322,8 +322,14 @@ class Elasticsearch:
         aggregation = response.get('aggregations')
 
         total_page = math.ceil(total/size) if size > 0 else 0
+        reutrn_data = []
+        
+        for item in data:
+            _source = item.get('_source')
+            _source.update({'_id': item.get('_id')})
+            reutrn_data.append(_source)
         return {
-            'data': data,
+            'data': reutrn_data,
             'aggregation': aggregation,
             'page': start,
             'size': size,
