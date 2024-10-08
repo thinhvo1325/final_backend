@@ -93,6 +93,7 @@ class ImageFileSearchSchema(BaseModel):
     user_id: Optional[int] = None
     is_public: Optional[bool] = None
     text: Optional[str] = None
+    face: Optional[str] = None
     object_name: Optional[str] = None
 
     def model_dump(self, **kwargs) -> dict[str, Any]:
