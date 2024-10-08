@@ -42,7 +42,7 @@ async def upload(
         "is_public": False,
         "resource_path": None,
         "text_list": "",
-        "face_embedding": [],
+        "face_embedding": [0.0] * 512,
         "object_list": [],
         "user_id": 1})
     return UploadResponse(status="DETECTING", time=time, status_code=HTTP_200_OK, task_id=task_id)
