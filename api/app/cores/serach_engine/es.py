@@ -281,7 +281,28 @@ class Elasticsearch:
             body={'query': query},
             refresh=True
         )
+    def raw_search(self, search_body):
+            """
+            Performs a raw search query on the index.
 
+            Args:
+                start (int): The starting page of the search results.
+                size (int): The number of results per page.
+                must (list): The list of must conditions.
+                must_not (list): The list of must not conditions.
+                should (list): The list of should conditions.
+                aggs (dict): The aggregations to be performed.
+                sort (any): The sorting criteria.
+
+            Returns:
+                dict: The search results.
+            """
+        
+            response = self.es.search(
+                index=self.index,
+                body=search_body
+            )
+            return response
     def raw_search_query(self, start: int = 1, size: int = 10, must: list = [], must_not: list = [], should: list = [],
                          aggs: dict = {}, sort: any = {}):
         """
