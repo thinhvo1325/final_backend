@@ -1,8 +1,8 @@
-"""add field detection to image
+"""crate all table
 
-Revision ID: 3abad82a2eaa
+Revision ID: 97707e4b4d6b
 Revises: 
-Create Date: 2024-09-26 08:50:58.928347
+Create Date: 2024-10-08 14:19:05.408336
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3abad82a2eaa'
+revision = '97707e4b4d6b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,6 +39,7 @@ def upgrade() -> None:
     sa.Column('object_list', sa.JSON(), nullable=True),
     sa.Column('text_list', sa.String(length=10000), nullable=True),
     sa.Column('face_list', sa.JSON(), nullable=True),
+    sa.Column('is_public', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
