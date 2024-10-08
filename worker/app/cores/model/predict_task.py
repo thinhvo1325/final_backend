@@ -34,7 +34,7 @@ class PredictTask(object):
             text_detection_result = [d['facial_area'] for d in data]
             status = json.loads(redis_connecter.get(task_id))
             status.update({'face_detection': text_detection_result})
-            redis_connecter.set(task_id, json.dumps(status))
+            # redis_connecter.set(task_id, json.dumps(status))
             self.sender.publish({'task_id': task_id, 
                                 'type': 'face_detection',
                                 'data': data})

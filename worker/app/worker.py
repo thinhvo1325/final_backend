@@ -24,7 +24,7 @@ def main(name_queue):
                 new_t.start()
                 print(f"Đã khởi động lại thread {new_t.name}")
         
-        time.sleep(60)
+        time.sleep(10)
 
 if __name__ == "__main__":
     name_queue = sys.argv[1:]

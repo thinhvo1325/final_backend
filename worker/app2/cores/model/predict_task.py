@@ -45,7 +45,7 @@ class PredictTask(object):
                     object_detection_result.append({'box': str(list(box)), 'class': int(classes), 'score': str(round(score,3)*100)})
             status = json.loads(redis_connecter.get(task_id))
             status.update({'object_detection': object_detection_result})
-            redis_connecter.set(task_id, json.dumps(status))
+            # redis_connecter.set(task_id, json.dumps(status))
             self.sender.publish({'task_id': task_id, 
                                 'type': 'object_detection',
                                 'data': object_detection_result})
