@@ -44,7 +44,8 @@ class HandleImage():
         
         data = body.get('data')
         if detector == 'face_detection':
-            self.image_manager.update(task_id, {"face_embedding": data['embedding']})
+            for item in data:
+                self.image_manager.update(task_id, {"face_embedding": item['embedding']})
         elif detector == 'object_detection':
             for item in data:
                 item['score'] = float(item['score'])
