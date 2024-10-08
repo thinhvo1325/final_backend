@@ -53,6 +53,7 @@ class ImageManager(BaseRepo):
                 if key == 'face':
                     ids = find_similar_embeddings(value)
                     must.append({'ids': {'values': ids}})
+                    return self.es.raw_search_query(start=page, size=page_size, must=must, must_not=must_not,should=should, aggs=aggs)
                 match_query = must_and_must_not_query(is_search=is_search, params={key: value})
                 must += match_query.get('must', [])
                 must_not += match_query.get('must_not', [])
