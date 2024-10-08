@@ -5,7 +5,7 @@ from services.user_service import UserService
 
 es = Elasticsearch("image_manager_index")
 
-for i in range(1000):
+for i in range(1, 1000):
     must = must_and_must_not_query(params={"user_id": i})
     images = es.raw_search_query(must=must.get("must"), size=10000)
     if images['data'] == []:
@@ -19,7 +19,6 @@ for i in range(1000):
     embedding_matrix = np.vstack(list_embedded)
     clusterer = hdbscan.HDBSCAN(min_cluster_size=3)
     cluster_labels = clusterer.fit_predict(embedding_matrix)
-
     for image_id, cluster in zip(list_embedded, list_id, cluster_labels):
         es.update(image_id, {"cluster": cluster})
 
