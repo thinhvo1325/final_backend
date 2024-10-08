@@ -2,6 +2,7 @@ from repositories.image_es_repo import ImageManager
 from cores.service_init import redis_connecter
 import json
 import numpy as np
+import time
 def get_centroid(box):
     return np.mean(box, axis=0)
 
@@ -54,4 +55,4 @@ class HandleImage():
             self.image_manager.update(task_id, {"object_list": data, "resource_path": resource_path})
         elif detector == 'text_detection':
             self.image_manager.update(task_id, {"text_list": sort_word(data), "resource_path": resource_path})
-
+        time.sleep(0.2)
