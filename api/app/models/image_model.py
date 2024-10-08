@@ -1,5 +1,5 @@
 from cores.databases.db_helper import Base
-from sqlalchemy import Column, Integer, String, ForeignKey, JSON
+from sqlalchemy import Column, Integer, String, ForeignKey, JSON,Boolean
 from sqlalchemy.orm import relationship
 class Image(Base):
     """
@@ -18,3 +18,4 @@ class Image(Base):
     object_list = Column(JSON, nullable=True)
     text_list = Column(String(10000), nullable=True)
     face_list = Column(JSON, nullable=True)
+    is_public = Column(Boolean, default=False, nullable=True)
