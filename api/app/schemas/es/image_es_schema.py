@@ -28,6 +28,9 @@ ES_FILE_SCHEMA = {
         "type": "date",
         "format": "yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||yyyy/MM||yyyy"
     },
+    "face_embedding": {
+        "type": "float"
+    },
     "text_list": {
         "type": "text",
         "fields": {

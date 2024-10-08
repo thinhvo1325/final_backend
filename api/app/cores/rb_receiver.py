@@ -32,8 +32,11 @@ class RabbitMQReceiver(object):
 
     def callback(self, ch, method, properties, body):
         body = json.loads(body)
-        service = HandleImage()
-        service.update_iamge(body)
+        try:
+            service = HandleImage()
+            service.update_iamge(body)
+        except Exception as e:
+            print(e)
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def start_consuming(self):

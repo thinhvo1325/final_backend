@@ -36,7 +36,6 @@ def sort_word(data):
 class HandleImage():
     def __init__(self):
         self.image_manager = ImageManager()
-        pass
 
     def update_iamge(self, body):
         task_id = body.get('task_id')
@@ -45,8 +44,7 @@ class HandleImage():
         
         data = body.get('data')
         if detector == 'face_detection':
-            # self.image_manager.update(task_id, {"": data})
-            pass
+            self.image_manager.update(task_id, {"face_embedding": data['embedding']})
         elif detector == 'object_detection':
             for item in data:
                 item['score'] = float(item['score'])
