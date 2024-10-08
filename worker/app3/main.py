@@ -19,7 +19,7 @@ for i in range(1, 1000):
     embedding_matrix = np.vstack(list_embedded)
     clusterer = hdbscan.HDBSCAN(min_cluster_size=3)
     cluster_labels = clusterer.fit_predict(embedding_matrix)
-    for image_id, cluster in zip(list_embedded, list_id, cluster_labels):
+    for image_id, cluster in zip(list_id, cluster_labels):
         es.update(image_id, {"cluster": cluster})
 
 # To run the async function
