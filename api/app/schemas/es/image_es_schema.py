@@ -29,7 +29,11 @@ ES_FILE_SCHEMA = {
         "format": "yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||yyyy/MM||yyyy"
     },
     "face_embedding": {
-        "type": "float"
+        "type": "dense_vector",  
+        "dims": 512  
+    },
+    "cluster": {
+        "type": "integer"
     },
     "text_list": {
         "type": "text",
