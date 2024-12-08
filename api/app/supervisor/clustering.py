@@ -11,12 +11,14 @@ from sklearn.preprocessing import normalize
 import pandas as pd
 from sklearn.decomposition import PCA
 import hdbscan
-for i in range(1000):
+for i in range(1, 1000):
     mmn = must_and_must_not_query(params={"user_id": i})
     result = es.raw_search_query(start=1, size=10000, must=mmn.get('must', []), must_not=mmn.get('must_not', []), should=mmn.get('should', []), aggs={})
     list_id = []
     list_embb = []
-    for data in result.get('reutrn_data'):
+    if result.get('data') == []:
+        continue
+    for data in result.get('data'):
         for item in data.get("face_embedding"):
             list_id.append(data.get('_id'))
             list_embb.append(item.get('embedding'))
