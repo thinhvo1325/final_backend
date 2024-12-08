@@ -45,6 +45,8 @@ class HandleImage():
         
         data = body.get('data')
         if detector == 'face_detection':
+            for item in data:
+                del item['facial_area']
             self.image_manager.update(task_id, {"face_embedding": data})
         elif detector == 'object_detection':
             for item in data:
