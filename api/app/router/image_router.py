@@ -74,17 +74,25 @@ def get_cluster(
 ):
     result = image_manager.search( page_size=10000)
     list_cluser = {}
+    list_link = {}
     for data in result['data']:
         if data.get('face_embedding') != []:
             for item in data.get('face_embedding'):
                 if item['cluster'] not in list_cluser:
                     list_cluser[item['cluster']] = 0
+                    list_link[item['cluster']] = ''
                 list_cluser[item['cluster']] += 1
+                list_link[item['cluster']] = 'http://160.30.112.24/upload' +data['resource_path']+'.jpg'
+                
+
+
     if list_cluser.get(-1, None) is not None:
         del list_cluser[-1]
     if list_cluser.get(-5, None) is not None:
         del list_cluser[-5]
-    return [[k,v] for k,v in list_cluser.items()]
+    return_list = [[k,v,list_link[k]] for k,v in list_cluser.items()]
+
+    return return_list
 
 @router.get("/cluster_image")
 def get_cluster(cluser: int
