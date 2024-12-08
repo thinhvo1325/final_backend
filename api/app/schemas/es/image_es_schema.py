@@ -29,8 +29,22 @@ ES_FILE_SCHEMA = {
         "format": "yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||yyyy/MM||yyyy"
     },
     "face_embedding": {
-        "type": "dense_vector",  
-        "dims": 512  
+        "properties": {
+            "embedding": {
+                "type": "dense_vector",  
+                "dims": 512  
+            },
+            "face_info": {
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "cluster": {
+                "type": "integer"
+            }
+        }
     },
     "cluster": {
         "type": "integer"
