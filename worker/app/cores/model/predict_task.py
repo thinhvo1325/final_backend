@@ -20,11 +20,12 @@ class PredictTask(object):
         model = FaceDetection()
         return model
     
-    def draw_image(self, file_path, list_face):
+    def draw_image(self, file_path, data):
         image = Image.open(file_path)
         draw = ImageDraw.Draw(image)
-        for face in list_face:
-            x, y, w, h = face["x"], face["y"], face["w"], face["h"]
+
+        for face in data["face_embedding"]:
+            x, y, w, h = face["facial_area"]
             draw.rectangle([x, y, x + w, y + h], outline="red", width=1) 
         image.save(file_path.replace(config('FOLDER_UPLOAD'),config('FOLDER_FACE')))
 
@@ -38,7 +39,7 @@ class PredictTask(object):
             self.sender.publish({'task_id': task_id, 
                                 'type': 'face_detection',
                                 'data': data})
-            self.draw_image(file_path, text_detection_result)
+            self.draw_image(file_path, data)
         except Exception as e:
             return
        
