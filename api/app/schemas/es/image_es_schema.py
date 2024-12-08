@@ -29,22 +29,7 @@ ES_FILE_SCHEMA = {
         "format": "yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||yyyy/MM||yyyy"
     },
     "face_embedding": {
-        "properties": {
-            "embedding": {
-                "type": "float"
-            },
-            "facial_area": {
-                "type": "float",
-                "fields": {
-                    "keyword": {
-                        "type": "keyword"
-                    }
-                }
-            },
-            "cluster": {
-                "type": "integer"
-            }
-        }
+                "type": "keyword"
     },
     "text_list": {
         "type": "text",
