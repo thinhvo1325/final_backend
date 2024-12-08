@@ -30,7 +30,7 @@ for i in range(1, 1000):
     pca = PCA(n_components=50)
     reduced_embeddings = pca.fit_transform(embeddings)
 
-    hdbscan_clusterer = hdbscan.HDBSCAN(min_cluster_size=5)
+    hdbscan_clusterer = hdbscan.HDBSCAN(min_cluster_size=3)
     labels = hdbscan_clusterer.fit_predict(reduced_embeddings)
     df['cluster'] = labels
     for id, cluster, emmb in zip(ids, labels, embeddings):
