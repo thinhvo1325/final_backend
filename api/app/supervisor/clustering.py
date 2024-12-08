@@ -1,3 +1,7 @@
+from pathlib import Path
+import sys
+path_root = Path(__file__).parents[1]
+sys.path.append(str(path_root))
 from cores.serach_engine.es import using_ES, must_and_must_not_query, aggressive_query
 from cores.serach_engine.es import Elasticsearch
 es = Elasticsearch("image_manager_index")
