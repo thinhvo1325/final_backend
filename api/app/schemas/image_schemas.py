@@ -107,6 +107,8 @@ class ImageFileSearchSchema(BaseModel):
             if value is not None:
                 if key in change_names.keys():
                     return_data.update({change_names.get(key): value})
+                else:
+                    return_data.update({key: value})
         return_data_new = {}
         for key, value in return_data.items():
             if value is not None:

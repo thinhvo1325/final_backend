@@ -3,40 +3,6 @@ from cores.serach_engine.es import using_ES, must_and_must_not_query, aggressive
 from cores.common import dump_str_to_date_format, viettnamese_regex_pattent
 from schemas.es.image_es_schema import ES_FILE_INDEX, ES_FILE_SCHEMA
 from cores.serach_engine.es import Elasticsearch
-def find_similar_embeddings(embedding_id):
-    es = Elasticsearch("image_manager_index")
-
-    res = es.get_by_id(embedding_id)
-    target_embedding = res['face_embedding']
-    target_cluster = res.get("cluster", -1)  # Lấy cụm của embedding
-    
-    search_body = {
-        "query": {
-            "script_score": {
-                "query": {
-                    "bool": {
-                    "must": [
-                        { "term": { "cluster": target_cluster} }
-                    ]
-                    }
-                },
-                "script": {
-                    "source": "cosineSimilarity(params.query_vector, 'face_embedding') + 1.0",
-                    "params": {
-                        "query_vector":target_embedding
-                    }
-                }
-            }
-        },
-        "size": 10
-    }
-
-
-    similar_res = es.raw_search(search_body)
-
-
-    similar_embeddings = [hit['_source']['image_id'] for hit in similar_res['hits']['hits']]
-    return similar_embeddings
 
 class ImageManager(BaseRepo):
     def __init__(self):
@@ -54,7 +20,7 @@ class ImageManager(BaseRepo):
                     result = self.es.raw_search_query(start=page, size=page_size, must=must, must_not=must_not,should=should, aggs=aggs)
                     return_data = []
                     for item in result['data']:
-                        if item['face_embedding'] !=[]:
+                        if item['face_embedding'] !=[] :
                             return_data.append(item)
                     result['data'] = return_data
                     return result
