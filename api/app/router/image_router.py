@@ -84,7 +84,7 @@ def get_cluster(
     del list_cluser[-5]
     return [[k,v] for k,v in list_cluser.items()]
 
-@router.get("/cluster/{}")
+@router.get("/cluster_image")
 def get_cluster(cluser: int
 ):
     result = image_manager.search( image_search_schemas=[{'face_embedding.cluster': cluser}], page_size=10000)
