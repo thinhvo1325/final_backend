@@ -23,7 +23,7 @@ class FaceDetection():
             face_info['facial_area'] = face['facial_area']
 
             image = cv2.imread(file_path)
-            x, y, w, h = face['x'], face['y'], face['w'], face['h']
+            x, y, w, h = face['facial_area']['x'], face['facial_area']['y'], face['facial_area']['w'], face['facial_area']['h']
             face_image = image[y:y+h, x:x+w]
             # Save the cropped face image
             cv2.imwrite(file_path+'.jpg', face_image)
