@@ -69,6 +69,18 @@ def get_list(
     result = image_manager.search(is_search=is_search, image_search_schemas=image_search_schemas.model_dump(), page=page, page_size=page_size)
     return result
 
+@router.get("/cluster")
+def get_cluster(
+):
+    result = image_manager.search( page_size=10000)
+    list_cluser = {}
+    for data in result['data']:
+        if data.get('face_embedding') != []:
+            for item in data.get('face_embedding'):
+                if item['cluster'] not in list_cluser:
+                    list_cluser[item['cluster']] = 0
+                list_cluser[item['cluster']] += 1
+    return [[k,v] for k,v in list_cluser.items()]
 
 @router.put('/update')
 async def update_image(
