@@ -16,8 +16,7 @@ async def login(
     obj: LoginSchema,
     user_service: UserService = Depends()
 ) -> Any:
-    result  = await user_service.find_user(**obj.model_dump())
-    return response_return(**result)
+    return await user_service.find_user(**obj.model_dump())
 
 @router.post('/create')
 async def create_users(

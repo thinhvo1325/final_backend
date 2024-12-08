@@ -19,8 +19,9 @@ class UserService(SqlAchemyAbstract):
                 return handler_response(403, None, "Sai tài khoản hoặc mật khẩu")
             data = checker.__dict__
             data.pop('_sa_instance_state')
-            data['access_token'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJsZXh1YW50cnVuZ2ZvcnRlc3RAb3V0bG9vay5jb20iLCJleHAiOjg4MTI1MzI4MjExfQ.7arKAKk_dyR-loxpe-EbYG-_gzqzcZAzecAAGiH8ZxE'
-            return handler_response(200, data, "Tìm thấy user")
+            import jwt
+            payload = {'id': data['id'], 'email': data['email'], 'exp': 88125328211}
+            return jwt.encode(payload)
         except Exception as e:
             return handler_response(500, None, str(e))
         
