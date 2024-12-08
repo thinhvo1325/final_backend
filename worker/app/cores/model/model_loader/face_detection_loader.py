@@ -1,6 +1,14 @@
 from deepface import DeepFace
+import cv2 
+# See github.com/timesler/facenet-pytorch:
+from facenet_pytorch import MTCNN, InceptionResnetV1, extract_face
+import torch
+from PIL import Image
+from torchvision.transforms import ToTensor
 class FaceDetection():
     def __init__(self):
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.resnet = InceptionResnetV1(pretrained='vggface2', device=self.device).eval()
         pass
     def predict(self, file_path):
         face_objs = DeepFace.extract_faces(
@@ -13,14 +21,18 @@ class FaceDetection():
         for face in face_objs:
             face_info = {}
             face_info['facial_area'] = face['facial_area']
-            embedding_objs = DeepFace.represent(
-                img_path = face['face'],
-                enforce_detection = False,
-                model_name  = 'GhostFaceNet'
-                )
-            for embedding_obj in embedding_objs:
-                embedding = embedding_obj["embedding"]
-                face_info['embedding'] = embedding
+
+            image = cv2.imread(file_path)
+            x, y, w, h = face['x'], face['y'], face['w'], face['h']
+            face_image = image[y:y+h, x:x+w]
+            # Save the cropped face image
+            cv2.imwrite(file_path+'.jpg', face_image)
+            tf_img = lambda i: ToTensor()(i).unsqueeze(0)
+            embeddings = lambda input: self.resnet(input)
+            t = tf_img(Image.open(file_path+'.jpg')).to(self.device)
+            e = embeddings(t).squeeze().cpu().tolist()
+            face_info['embedding'] = e
+            face_info['cluster'] = -5
             data.append(face_info)
 
         return data
