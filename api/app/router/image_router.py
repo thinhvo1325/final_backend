@@ -80,14 +80,16 @@ def get_cluster(
                 if item['cluster'] not in list_cluser:
                     list_cluser[item['cluster']] = 0
                 list_cluser[item['cluster']] += 1
-    del list_cluser[-1]
-    del list_cluser[-5]
+    if list_cluser.get(-1, None) is not None:
+        del list_cluser[-1]
+    if list_cluser.get(-5, None) is not None:
+        del list_cluser[-5]
     return [[k,v] for k,v in list_cluser.items()]
 
 @router.get("/cluster_image")
 def get_cluster(cluser: int
 ):
-    result = image_manager.search( image_search_schemas=[{'face_embedding.cluster': cluser}], page_size=10000)
+    result = image_manager.search( image_search_schemas={'face_embedding.cluster': cluser}, page_size=10000)
     return result
 
 
