@@ -34,6 +34,7 @@ ES_FILE_SCHEMA = {
                 "type": "float"
             },
             "facial_area": {
+                "type": "float",
                 "fields": {
                     "keyword": {
                         "type": "keyword"
