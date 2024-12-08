@@ -21,7 +21,7 @@ class UserService(SqlAchemyAbstract):
             data.pop('_sa_instance_state')
             import jwt
             payload = {'id': data['id'], 'email': data['email'], 'exp': 88125328211}
-            return jwt.encode(payload)
+            return jwt.encode(payload, '22222', algorithm='HS256')
         except Exception as e:
             return handler_response(500, None, str(e))
         
