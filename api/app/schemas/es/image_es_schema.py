@@ -31,10 +31,9 @@ ES_FILE_SCHEMA = {
     "face_embedding": {
         "properties": {
             "embedding": {
-                "type": "dense_vector",  
-                "dims": 512  
+                "type": "float"
             },
-            "face_info": {
+            "facial_area": {
                 "fields": {
                     "keyword": {
                         "type": "keyword"
@@ -45,9 +44,6 @@ ES_FILE_SCHEMA = {
                 "type": "integer"
             }
         }
-    },
-    "cluster": {
-        "type": "integer"
     },
     "text_list": {
         "type": "text",
