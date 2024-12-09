@@ -24,7 +24,7 @@ class PredictTask(object):
         image = Image.open(file_path)
         draw = ImageDraw.Draw(image)
 
-        for face in data["face_embedding"]:
+        for face in data:
             x, y, w, h = face["facial_area"]
             draw.rectangle([x, y, x + w, y + h], outline="red", width=1) 
         image.save(file_path.replace(config('FOLDER_UPLOAD'),config('FOLDER_FACE')))
