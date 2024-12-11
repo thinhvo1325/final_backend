@@ -28,7 +28,7 @@ services:
     environment:
       - MYSQL_DATABASE=photo_app
       - MYSQL_ROOT_USERNAME=root
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=zyzZyz321
     ports:
       - 3306:3306
     networks:
