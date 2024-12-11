@@ -37,33 +37,33 @@ while True:
             if len(embeddings)>200:
                 min_cluster_size=5
             if len(embeddings)>300:
-                min_cluster_size=6
+                min_cluster_size=5
             if len(embeddings)>400:
-                min_cluster_size=7
+                min_cluster_size=6
             if len(embeddings)>500:
-                min_cluster_size=8
+                min_cluster_size=7
             if len(embeddings)>600:
-                min_cluster_size=9
+                min_cluster_size=7
             if len(embeddings)>700:
-                min_cluster_size=10
+                min_cluster_size=8
             if len(embeddings)>800:
-                min_cluster_size=11
+                min_cluster_size=8
             if len(embeddings)>900:
-                min_cluster_size=12
+                min_cluster_size=9
             if len(embeddings)>1000:
-                min_cluster_size=13
+                min_cluster_size=9
             if len(embeddings)>1100:
-                min_cluster_size=14
+                min_cluster_size=10
             if len(embeddings)>1200:
-                min_cluster_size=15
+                min_cluster_size=10
             if len(embeddings)>1300:
-                min_cluster_size=16
+                min_cluster_size=11
             if len(embeddings)>1400:
-                min_cluster_size=17
+                min_cluster_size=11
             if len(embeddings)>1500:
-                min_cluster_size=18
+                min_cluster_size=12
             if len(embeddings)>1600:
-                min_cluster_size=19
+                min_cluster_size=12
             hdbscan_clusterer = hdbscan.HDBSCAN(min_cluster_size=min_cluster_size)
             labels = hdbscan_clusterer.fit_predict(embeddings)
             df['cluster'] = labels
