@@ -31,8 +31,40 @@ while True:
 
         #    pca = PCA(n_components=50)
         #    reduced_embeddings = pca.fit_transform(embeddings)
-
-            hdbscan_clusterer = hdbscan.HDBSCAN(min_cluster_size=3)
+            min_cluster_size = 3
+            if len(embeddings)>100:
+                min_cluster_size=4
+            if len(embeddings)>200:
+                min_cluster_size=5
+            if len(embeddings)>300:
+                min_cluster_size=6
+            if len(embeddings)>400:
+                min_cluster_size=7
+            if len(embeddings)>500:
+                min_cluster_size=8
+            if len(embeddings)>600:
+                min_cluster_size=9
+            if len(embeddings)>700:
+                min_cluster_size=10
+            if len(embeddings)>800:
+                min_cluster_size=11
+            if len(embeddings)>900:
+                min_cluster_size=12
+            if len(embeddings)>1000:
+                min_cluster_size=13
+            if len(embeddings)>1100:
+                min_cluster_size=14
+            if len(embeddings)>1200:
+                min_cluster_size=15
+            if len(embeddings)>1300:
+                min_cluster_size=16
+            if len(embeddings)>1400:
+                min_cluster_size=17
+            if len(embeddings)>1500:
+                min_cluster_size=18
+            if len(embeddings)>1600:
+                min_cluster_size=19
+            hdbscan_clusterer = hdbscan.HDBSCAN(min_cluster_size=min_cluster_size)
             labels = hdbscan_clusterer.fit_predict(embeddings)
             df['cluster'] = labels
             for id, cluster, emmb in zip(ids, labels, embeddings):
