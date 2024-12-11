@@ -27,21 +27,21 @@ for i in range(1, 1000):
     embeddings = np.vstack(df['embedding'].to_numpy())
     ids = df['list_id'].to_list()
 
-    pca = PCA(n_components=50)
-    reduced_embeddings = pca.fit_transform(embeddings)
+#    pca = PCA(n_components=50)
+#    reduced_embeddings = pca.fit_transform(embeddings)
 
     hdbscan_clusterer = hdbscan.HDBSCAN(min_cluster_size=3)
-    labels = hdbscan_clusterer.fit_predict(reduced_embeddings)
+    labels = hdbscan_clusterer.fit_predict(embeddings)
     df['cluster'] = labels
     for id, cluster, emmb in zip(ids, labels, embeddings):
         img = es.get_by_id(id)
         face_embedding = img.get('face_embedding')
         for item in face_embedding:
-            if item.get('embedding') == emmb:
+            if item.get('embedding')[0] == emmb[0]:
                 item['cluster'] = cluster
         es.update(id, {"face_embedding": img.get('face_embedding')})
 
 
 
 import time
-time.sleep(86400*7)
+time.sleep(10)
