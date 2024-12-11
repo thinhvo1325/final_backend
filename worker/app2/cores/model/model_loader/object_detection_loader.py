@@ -1,6 +1,3 @@
-import tensorflow as tf
-import numpy as np
-from six import BytesIO
 from PIL import Image
 from transformers import AutoImageProcessor, DeformableDetrForObjectDetection
 import torch
