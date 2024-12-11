@@ -120,7 +120,6 @@ id_use = [2,10,
  1161]
 class ObjectDetection():
     def __init__(self):
-        self.predicter = tf.saved_model.load("cores/model/model/saved_model")
         self.processor = AutoImageProcessor.from_pretrained("facebook/deformable-detr-box-supervised")
         self.model = DeformableDetrForObjectDetection.from_pretrained("facebook/deformable-detr-box-supervised")
 
